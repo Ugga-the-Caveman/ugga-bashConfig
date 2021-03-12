@@ -1,2 +1,7 @@
 # ugga-bashConfig
-my bashrc and profile
+my bashrc and profile template
+
+
+
+
+
