@@ -1,0 +1,69 @@
+if [ "$uggaColorHost" == "" ]
+then
+	uggaColorHost=15
+fi
+
+if [ "$uggaColorUser" == "" ]
+then
+	uggaColorUser=uggaColorHost
+fi
+
+if [ "$uggaColor3" == "" ]
+then
+	uggaColor3=241
+fi
+
+
+HISTCONTROL=ignoredups
+HISTTIMEFORMAT="%d.%m.%Y %T"
+HISTSIZE=500000
+
+PS1="\[$(tput setaf `echo $uggaColorUser`)\]\u"
+PS1+="\[$(tput setaf `echo $uggaColorHost`)\] @	\H"
+PS1+=" (\j Jobs)\n"
+PS1+='$(pwd)\n'
+PS1+="\[$(tput sgr0)\]"
+
+
+
+# This will run before any command is executed.
+
+function PreCommand() {
+  if [ -z "$AT_PROMPT" ]; then
+    return
+  fi
+  unset AT_PROMPT
+
+  # Do stuff.
+  startingTime=`date +%s`
+  echo "$(tput setaf `echo $uggaColor3`)#execution started at $(date +%T)$(tput sgr0)"
+
+}
+trap "PreCommand" DEBUG
+
+
+# This will run after the execution of the previous full command line.
+# We don't want it to execute when first starting a bash session i.e., at the first prompt.
+
+FIRST_PROMPT=1
+function PostCommand() {
+  AT_PROMPT=1
+
+  echo -en "\033]0;${USER}@${HOSTNAME%%.*} ${PWD}\a"
+
+  if [ -n "$FIRST_PROMPT" ]; then
+    unset FIRST_PROMPT
+    return
+  fi
+
+  # Do stuff
+  history -a
+  history -c
+  history -r
+  
+  completedTime=$((`date +%s`-$startingTime))
+  echo "$(tput setaf `echo $uggaColor3`)#execution stopped after $completedTime seconds$(tput sgr0)"
+  echo ""
+  
+}
+PROMPT_COMMAND="PostCommand"

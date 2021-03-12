@@ -1,0 +1,5 @@
+alias lst='ls -alh --color=auto'
+alias clr='clear'
+alias grep='grep --color=auto'
+alias hst='history | less +G'
+alias hstgrep='history | grep'
