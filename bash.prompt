@@ -1,16 +1,16 @@
 if [ "$uggaColorHost" == "" ]
 then
-	uggaColorHost=15
+        uggaColorHost="15"
 fi
 
 if [ "$uggaColorUser" == "" ]
 then
-	uggaColorUser=uggaColorHost
+        uggaColorUser="$uggaColorHost"
 fi
 
 if [ "$uggaColor3" == "" ]
 then
-	uggaColor3=241
+        uggaColor3="241"
 fi
 
 
@@ -18,11 +18,10 @@ HISTCONTROL=ignoredups
 HISTTIMEFORMAT="%d.%m.%Y %T"
 HISTSIZE=500000
 
-PS1="\[$(tput setaf `echo $uggaColorUser`)\]\u"
-PS1+="\[$(tput setaf `echo $uggaColorHost`)\] @	\H"
+PS1="\[$(tput setaf `echo $uggaColorUser`)\]\u\[$(tput sgr0)\] @ \[$(tput sgr0)\]\[$(tput setaf `echo $uggaColorHost`)\]\h\[$(tput sgr0)\]"
 PS1+=" (\j Jobs)\n"
 PS1+='$(pwd)\n'
-PS1+="\[$(tput sgr0)\]"
+#PS1+="\[$(tput sgr0)\]"
 
 
 
