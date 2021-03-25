@@ -3,10 +3,7 @@
 if [ -f "/etc/bash.prompt" ]
 then
         source /etc/bash.prompt
-else
-        PS1='[\u@\h \W]\$ '
 fi
-
 
 if [ -f "/etc/bash.aliases" ]
 then
